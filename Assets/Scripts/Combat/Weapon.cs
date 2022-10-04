@@ -66,7 +66,7 @@ namespace RPG.Combat
         {
             var transform = GetTransform(rightHand, leftHand);
             var projectileInstance = Instantiate(_projectile, transform.position, Quaternion.identity);
-            projectileInstance.SetTarget(target, instigator, _weaponDamage);
+            projectileInstance.SetTarget(target, instigator, calculatedDamage);
         }
     }
 }

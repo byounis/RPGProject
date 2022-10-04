@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RPG.Attributes;
 using RPG.Core;
 using RPG.Movement;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IAction, ISaveable
+    public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
     {
         [SerializeField] private ActionScheduler _actionScheduler;
         [SerializeField] private Mover _mover;
@@ -95,19 +96,6 @@ namespace RPG.Combat
             _target = combatTarget.GetComponent<Health>();
         }
 
-        public void Cancel()
-        {
-            StopAttack();
-            _mover.Cancel();
-            _target = null;
-        }
-
-        private void StopAttack()
-        {
-            _animator.ResetTrigger(AttackAnimatorHash);
-            _animator.SetTrigger(StopAttackAnimatorHash);
-        }
-
         public void Hit()
         {
             if (_target == null)
@@ -123,6 +111,27 @@ namespace RPG.Combat
             else
             {
                 _target.TakeDamage(gameObject, damage);
+            }
+        }
+
+        public void Cancel()
+        {
+            StopAttack();
+            _mover.Cancel();
+            _target = null;
+        }
+
+        private void StopAttack()
+        {
+            _animator.ResetTrigger(AttackAnimatorHash);
+            _animator.SetTrigger(StopAttackAnimatorHash);
+        }
+        
+        public IEnumerable<float> GetAdditiveModifier(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return _currentWeapon.WeaponDamage;
             }
         }
 

@@ -10,6 +10,7 @@ namespace RPG.Combat
         [SerializeField] private AnimatorOverrideController _animatorOverride;
         
         [SerializeField] private float _weaponRange;
+        [SerializeField] private float _percentageBonus;
         [SerializeField] private float _timeBetweenAttacks;
         [SerializeField] private float _weaponDamage;
         [SerializeField] private bool _isRightHanded = true;
@@ -18,6 +19,7 @@ namespace RPG.Combat
         public float WeaponRange => _weaponRange;
         public float TimeBetweenAttacks => _timeBetweenAttacks;
         public float WeaponDamage => _weaponDamage;
+        public float PercentageBonus => _percentageBonus;
         public bool HasProjectile => _projectile != null;
 
         private const string WeaponName = "Weapon";

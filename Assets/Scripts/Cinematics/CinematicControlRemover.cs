@@ -14,13 +14,13 @@ namespace RPG.Cinematics
         private ActionScheduler _actionScheduler;
         private PlayerController _playerController;
 
-        private void Start()
+        private void Awake()
         {
             _player = GameObject.FindWithTag("Player");
             _actionScheduler = _player.GetComponent<ActionScheduler>();
             _playerController = _player.GetComponent<PlayerController>();
         }
-
+        
         private void OnEnable()
         {
             _playableDirector.played += DisableControl;

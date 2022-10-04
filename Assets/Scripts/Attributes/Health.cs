@@ -1,3 +1,4 @@
+using System;
 using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
@@ -13,6 +14,7 @@ namespace RPG.Attributes
         private Animator _animator;
         private static readonly int DieAnimatorHash = Animator.StringToHash("Die");
         private ActionScheduler _actionScheduler;
+        private BaseStats _baseStats;
 
         public bool HasDied { get; private set; }
         public float HealthPoints => _healthPoints;
@@ -22,17 +24,26 @@ namespace RPG.Attributes
         {
             _animator = GetComponentInChildren<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _baseStats = GetComponent<BaseStats>();
         }
 
         private void Start()
         {
-            var baseStats = GetComponent<BaseStats>();
-            baseStats.OnLevelUp += RegenerateHealth;
             //Has not been restored and is still the uninitialized value
             if(_healthPoints < 0)
             {
-                _healthPoints = (int) baseStats.GetStat(Stat.Health);
+                _healthPoints = (int) _baseStats.GetStat(Stat.Health);
             }
+        }
+
+        private void OnEnable()
+        {
+            _baseStats.OnLevelUp += RegenerateHealth;
+        }
+
+        private void OnDisable()
+        {
+            _baseStats.OnLevelUp -= RegenerateHealth;
         }
 
         public void TakeDamage(GameObject instigator, float damage)

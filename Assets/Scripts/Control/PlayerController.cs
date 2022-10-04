@@ -1,3 +1,4 @@
+using System;
 using RPG.Attributes;
 using RPG.Combat;
 using RPG.Movement;
@@ -12,11 +13,15 @@ namespace RPG.Control
     
         private Camera _mainCamera;
         private Health _health;
-    
+
+        private void Awake()
+        {
+            _health = GetComponent<Health>();
+        }
+
         private void Start()
         {
             _mainCamera = Camera.main;
-            _health = GetComponent<Health>();
         }
     
         private void Update()

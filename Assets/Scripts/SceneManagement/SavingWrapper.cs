@@ -19,9 +19,9 @@ namespace RPG.Core
 
         private IEnumerator LoadLastScene()
         {
+            yield return SavingSystem.LoadLastScene(DefaultSaveFile);
             var fader = FindObjectOfType<Fader>();
             fader.FadeOutImmediate();
-            yield return SavingSystem.LoadLastScene(DefaultSaveFile);
             yield return fader.FadeIn(_fadeInTime);
         }
 

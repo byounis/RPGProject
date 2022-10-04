@@ -12,16 +12,32 @@ namespace RPG.Stats
         [SerializeField] private bool _shouldUseModifiers;
 
         private int _currentLevel = 0;
+        private Experience _experience;
         public event Action OnLevelUp;
+
+        private void Awake()
+        {
+            _experience = GetComponent<Experience>();
+        }
 
         private void Start()
         {
             _currentLevel = CalculateLevel();
-            var experience = GetComponent<Experience>();
+        }
 
-            if (experience != null)
+        private void OnEnable()
+        {
+            if (_experience != null)
             {
-                experience.OnExperienceGained += UpdateLevel;
+                _experience.OnExperienceGained += UpdateLevel;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_experience != null)
+            {
+                _experience.OnExperienceGained -= UpdateLevel;
             }
         }
 

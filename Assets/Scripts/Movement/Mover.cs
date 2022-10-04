@@ -10,17 +10,18 @@ namespace RPG.Movement
     public class Mover : MonoBehaviour, IAction, ISaveable
     {
         [SerializeField] private ActionScheduler _actionScheduler;
-        [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private float _maxSpeed = 6f;
 
         private static readonly int ForwardSpeedAnimatorParameterID = Animator.StringToHash("ForwardSpeed");
         private Animator _animator;
         private Health _health;
+        private NavMeshAgent _navMeshAgent;
 
         private void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
             _health = GetComponent<Health>();
+            _navMeshAgent = GetComponent<NavMeshAgent>();
         }
         
         private void Update()

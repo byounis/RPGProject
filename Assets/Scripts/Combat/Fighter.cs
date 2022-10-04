@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameDevTV.Utils;
 using RPG.Attributes;
 using RPG.Core;
 using RPG.Movement;
@@ -21,25 +22,33 @@ namespace RPG.Combat
         private float _timeSinceLastAttack = Mathf.Infinity;
         private static readonly int AttackAnimatorHash = Animator.StringToHash("Attack");
         private static readonly int StopAttackAnimatorHash = Animator.StringToHash("StopAttack");
-        private Weapon _currentWeapon;
+        private LazyValue<Weapon> _currentWeapon;
 
         private void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
+            _currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+        }
+
+        private Weapon SetupDefaultWeapon()
+        {
+            AttachWeapon(_defaultWeapon);
+            return _defaultWeapon;
         }
 
         private void Start()
         {
-            // If saving system has not given us a weapon we spawn the default weapon
-            if(_currentWeapon == null)
-            {
-                EquipWeapon(_defaultWeapon);
-            }
+            _currentWeapon.ForceInit();
         }
 
         public void EquipWeapon(Weapon weapon)
         {
-            _currentWeapon = weapon;
+            _currentWeapon.value = weapon;
+            AttachWeapon(weapon);
+        }
+
+        private void AttachWeapon(Weapon weapon)
+        {
             weapon.Spawn(_rightHandTransform, _leftHandTransform, _animator);
         }
 
@@ -70,13 +79,13 @@ namespace RPG.Combat
 
         private bool InRange()
         {
-            return Vector3.Distance(_target.transform.position, transform.position) < _currentWeapon.WeaponRange;
+            return Vector3.Distance(_target.transform.position, transform.position) < _currentWeapon.value.WeaponRange;
         }
         
         private void AttackBehaviour()
         {
             transform.LookAt(_target.transform);
-            if (_timeSinceLastAttack > _currentWeapon.TimeBetweenAttacks)
+            if (_timeSinceLastAttack > _currentWeapon.value.TimeBetweenAttacks)
             {
                 _animator.ResetTrigger(StopAttackAnimatorHash);
                 _animator.SetTrigger(AttackAnimatorHash);
@@ -104,9 +113,9 @@ namespace RPG.Combat
             }
 
             var damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
-            if (_currentWeapon.HasProjectile)
+            if (_currentWeapon.value.HasProjectile)
             {
-                _currentWeapon.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target, gameObject, damage);
+                _currentWeapon.value.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target, gameObject, damage);
             }
             else
             {
@@ -131,7 +140,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return _currentWeapon.WeaponDamage;
+                yield return _currentWeapon.value.WeaponDamage;
             }
         }
         
@@ -139,7 +148,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return _currentWeapon.PercentageBonus;
+                yield return _currentWeapon.value.PercentageBonus;
             }
         }
 
@@ -147,7 +156,7 @@ namespace RPG.Combat
         
         public object CaptureState()
         {
-            return _currentWeapon.name;
+            return _currentWeapon.value.name;
         }
 
         public void RestoreState(object state)

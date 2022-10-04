@@ -1,4 +1,5 @@
 using System;
+using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
@@ -10,14 +11,14 @@ namespace RPG.Attributes
     {
         [SerializeField] private float _regenerationPercentage = 70f;
         
-        private int _healthPoints = -1;
+        private LazyValue<float> _healthPoints;
         private Animator _animator;
         private static readonly int DieAnimatorHash = Animator.StringToHash("Die");
         private ActionScheduler _actionScheduler;
         private BaseStats _baseStats;
 
         public bool HasDied { get; private set; }
-        public float HealthPoints => _healthPoints;
+        public float HealthPoints => _healthPoints.value;
         public float MaxHealthPoints => GetComponent<BaseStats>().GetStat(Stat.Health);
 
         private void Awake()
@@ -25,15 +26,17 @@ namespace RPG.Attributes
             _animator = GetComponentInChildren<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _baseStats = GetComponent<BaseStats>();
+            _healthPoints = new LazyValue<float>(GetInitialHealth);
+        }
+
+        private float GetInitialHealth()
+        {
+            return _baseStats.GetStat(Stat.Health);
         }
 
         private void Start()
         {
-            //Has not been restored and is still the uninitialized value
-            if(_healthPoints < 0)
-            {
-                _healthPoints = (int) _baseStats.GetStat(Stat.Health);
-            }
+            _healthPoints.ForceInit();
         }
 
         private void OnEnable()
@@ -50,9 +53,9 @@ namespace RPG.Attributes
         {
             print(gameObject.name + "took damage: " + damage);
             
-            _healthPoints = Mathf.Max(_healthPoints - (int)damage, 0);
+            _healthPoints.value = Mathf.Max(_healthPoints.value - damage, 0);
 
-            if (_healthPoints == 0)
+            if (_healthPoints.value == 0)
             {
                 Die();
                 //BUG: We award experience when you attack an enemy that is currently in the dying animation.
@@ -63,7 +66,7 @@ namespace RPG.Attributes
 
         public float GetPercentage()
         {
-            return _healthPoints * 100f / GetComponent<BaseStats>().GetStat(Stat.Health);
+            return _healthPoints.value * 100f / GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
         private void Die()
@@ -94,22 +97,22 @@ namespace RPG.Attributes
         private void RegenerateHealth()
         {
             var regenHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health) * (_regenerationPercentage / 100f);
-            _healthPoints = (int) Mathf.Max(_healthPoints, regenHealthPoints);
+            _healthPoints.value = (int) Mathf.Max(_healthPoints.value, regenHealthPoints);
         }
         
         #region Saving
         
         public object CaptureState()
         {
-            return _healthPoints;
+            return _healthPoints.value;
         }
 
         public void RestoreState(object state)
         {
             var healthState = (int)state;
-            _healthPoints = healthState;
+            _healthPoints.value = healthState;
             
-            if (_healthPoints == 0)
+            if (_healthPoints.value == 0)
             {
                 Die();
             }

@@ -109,7 +109,7 @@ namespace RPG.Attributes
 
         public void RestoreState(object state)
         {
-            var healthState = (int)state;
+            var healthState = (float)state;
             _healthPoints.value = healthState;
             
             if (_healthPoints.value == 0)

@@ -73,7 +73,7 @@ namespace RPG.Stats
 
         private float GetAdditiveModifier(Stat stat)
         {
-            if (_shouldUseModifiers)
+            if (!_shouldUseModifiers)
             {
                 return 0;
             }
@@ -92,7 +92,7 @@ namespace RPG.Stats
 
         private float GetPercentageModifier(Stat stat)
         {
-            if (_shouldUseModifiers)
+            if (!_shouldUseModifiers)
             {
                 return 0;
             }

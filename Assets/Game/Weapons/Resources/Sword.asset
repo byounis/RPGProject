@@ -16,8 +16,8 @@ MonoBehaviour:
     type: 3}
   _animatorOverride: {fileID: 22100000, guid: 32d39b0955c1c494b921c1f68583e395, type: 2}
   _weaponRange: 2
-  _percentageBonus: 10
+  _percentageBonus: 20
   _timeBetweenAttacks: 0.5
-  _weaponDamage: 10
+  _weaponDamage: 2
   _isRightHanded: 1
   _projectile: {fileID: 0}

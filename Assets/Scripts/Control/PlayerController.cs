@@ -8,14 +8,32 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private Mover _mover;
-        [SerializeField] private Fighter _fighter;
-    
+        enum CursorType
+        {
+            None,
+            Movement,
+            Combat
+        }
+
+        [Serializable]
+        struct CursorMapping
+        {
+            public CursorType CursorType;
+            public Texture2D Texture;
+            public Vector2 HotSpot;
+        }
+
+        [SerializeField] private CursorMapping[] _cursorMappings;
+        
+        private Mover _mover;
+        private Fighter _fighter;
         private Camera _mainCamera;
         private Health _health;
 
         private void Awake()
         {
+            _mover = GetComponent<Mover>();
+            _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();
         }
 
@@ -40,6 +58,8 @@ namespace RPG.Control
             {
                 return;
             }
+            
+            SetCursor(CursorType.None);
         }
 
         private bool InteractWithCombat()
@@ -63,6 +83,8 @@ namespace RPG.Control
                 {
                     _fighter.Attack(combatTarget.gameObject);
                 }
+
+                SetCursor(CursorType.Combat);
                 
                 return true;
             }
@@ -84,11 +106,31 @@ namespace RPG.Control
             {
                 _mover.StartMoveAction(hitInfo.point);
             }
+            
+            SetCursor(CursorType.Movement);
 
             return true;
-
         }
 
+        private void SetCursor(CursorType cursorType)
+        {
+            var cursorMapping = GetCursorMapping(cursorType);
+            Cursor.SetCursor(cursorMapping.Texture, cursorMapping.HotSpot, CursorMode.Auto);
+        }
+
+        private CursorMapping GetCursorMapping(CursorType cursorType)
+        {
+            foreach (var cursorMapping in _cursorMappings)
+            {
+                if (cursorMapping.CursorType == cursorType)
+                {
+                    return cursorMapping;
+                }
+            }
+
+            return default;
+        }
+        
         private Ray GetMouseRay()
         {
             return _mainCamera.ScreenPointToRay(Input.mousePosition);

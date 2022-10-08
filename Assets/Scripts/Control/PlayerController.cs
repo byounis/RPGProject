@@ -9,14 +9,6 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
-        enum CursorType
-        {
-            None,
-            Movement,
-            Combat,
-            UI
-        }
-
         [Serializable]
         struct CursorMapping
         {
@@ -56,8 +48,8 @@ namespace RPG.Control
                 SetCursor(CursorType.None);
                 return;
             }
-            
-            if (InteractWithCombat())
+
+            if (InteractWithComponent())
             {
                 return;
             }
@@ -70,6 +62,41 @@ namespace RPG.Control
             SetCursor(CursorType.None);
         }
 
+        private bool InteractWithComponent()
+        {
+            var hits = RaycastAllSorted();
+            
+            foreach (var hit in hits)
+            {
+                var raycastables = hit.transform.GetComponents<IRaycastable>();
+
+                foreach (var raycastable in raycastables)
+                {
+                    if (raycastable.HandleRaycast(this))
+                    {
+                        SetCursor(raycastable.GetCursorType());
+                        return true;
+                    }
+                }
+                
+            }
+            
+            return false;
+        }
+
+        private RaycastHit[] RaycastAllSorted()
+        {
+            var hits = Physics.RaycastAll(GetMouseRay());
+            var distances = new float[hits.Length];
+            for (var index = 0; index < hits.Length; index++)
+            {
+                distances[index] = hits[index].distance;
+            }
+
+            Array.Sort(distances, hits);
+            return hits;
+        }
+
         private bool InteractWithUI()
         {
             if (EventSystem.current.IsPointerOverGameObject())
@@ -78,36 +105,6 @@ namespace RPG.Control
                 return true;
             }
             
-            return false;
-        }
-
-        private bool InteractWithCombat()
-        {
-            var ray = GetMouseRay();
-            var hits = Physics.RaycastAll(ray);
-
-            foreach (var hit in hits)
-            {
-                if (!hit.transform.TryGetComponent<CombatTarget>(out var combatTarget))
-                {
-                    continue;
-                }
-                
-                if(!_fighter.CanAttack(combatTarget.gameObject))
-                {
-                    continue;
-                }
-
-                if (Input.GetMouseButton(0))
-                {
-                    _fighter.Attack(combatTarget.gameObject);
-                }
-
-                SetCursor(CursorType.Combat);
-                
-                return true;
-            }
-
             return false;
         }
 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6292257123709499207}
   - component: {fileID: 7222460812769602594}
+  - component: {fileID: 4684938249381007259}
   m_Layer: 0
   m_Name: WorldSpaceDamageText
   m_TagString: Untagged
@@ -48,6 +49,18 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &4684938249381007259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489251162667576118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc5e4e9307f4e24b60a3083a251cf36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4725376031757891399
 GameObject:
   m_ObjectHideFlags: 0

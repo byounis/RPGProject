@@ -118,6 +118,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _regenerationPercentage: 70
+  _takeDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8638786261116090485}
+        m_TargetAssemblyTypeName: RPG.UI.DamageTextSpawner, Assembly-CSharp
+        m_MethodName: Spawn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!136 &8404829255233152695
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -253,3 +268,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8166057174391228322}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8638786261116090485 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 482038995510362071, guid: 4256c9f70b87d0d44a1bb1758732a538,
+    type: 3}
+  m_PrefabInstance: {fileID: 8166057174391228322}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b739d7643d400ba71351efc16632e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

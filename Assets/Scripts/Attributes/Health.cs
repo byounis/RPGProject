@@ -4,12 +4,14 @@ using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISaveable
     {
         [SerializeField] private float _regenerationPercentage = 70f;
+        [SerializeField] private UnityEvent<float> _takeDamage;
         
         private LazyValue<float> _healthPoints;
         private Animator _animator;
@@ -51,8 +53,6 @@ namespace RPG.Attributes
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            print(gameObject.name + "took damage: " + damage);
-            
             _healthPoints.value = Mathf.Max(_healthPoints.value - damage, 0);
 
             if (_healthPoints.value == 0)
@@ -61,6 +61,10 @@ namespace RPG.Attributes
                 //BUG: We award experience when you attack an enemy that is currently in the dying animation.
                 //Which results in being rewarded twice.
                 AwardExperience(instigator);
+            }
+            else
+            {
+                _takeDamage.Invoke(damage);
             }
         }
 

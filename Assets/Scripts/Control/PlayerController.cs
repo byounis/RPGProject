@@ -1,8 +1,10 @@
 using System;
 using RPG.Attributes;
 using RPG.Combat;
+using RPG.Helpers;
 using RPG.Movement;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
 namespace RPG.Control
@@ -18,6 +20,8 @@ namespace RPG.Control
         }
 
         [SerializeField] private CursorMapping[] _cursorMappings;
+        [SerializeField] private int _maxDistanceNavMeshProjection = 1;
+        [SerializeField] private float _maxPathLength = 40f;
         
         private Mover _mover;
         private Fighter _fighter;
@@ -110,8 +114,9 @@ namespace RPG.Control
 
         private bool InteractWithMovement()
         {
-            var ray = GetMouseRay();
-            var isHit = Physics.Raycast(ray, out var hitInfo);
+            // var ray = GetMouseRay();
+            // var isHit = Physics.Raycast(ray, out var hitInfo);
+            var isHit = RaycastNavMesh(out var target);
 
             if (!isHit)
             {
@@ -120,10 +125,46 @@ namespace RPG.Control
             
             if (Input.GetMouseButton(0))
             {
-                _mover.StartMoveAction(hitInfo.point);
+                _mover.StartMoveAction(target);
             }
             
             SetCursor(CursorType.Movement);
+
+            return true;
+        }
+
+        private bool RaycastNavMesh(out Vector3 target)
+        {
+            target = Vector3.zero;
+            var ray = GetMouseRay();
+            var isRaycastHit = Physics.Raycast(ray, out var hitInfo);
+
+            if (!isRaycastHit)
+            {
+                return false;
+            }
+
+            var isNavMeshHit = NavMesh.SamplePosition(hitInfo.point, out var navMeshHit, _maxDistanceNavMeshProjection,
+                NavMesh.AllAreas);
+            if(!isNavMeshHit)
+            {
+                return false;
+            }
+            
+            target = navMeshHit.position;
+
+            var path = new NavMeshPath();
+            var hasPath = NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, path);
+
+            if (!hasPath || path.status != NavMeshPathStatus.PathComplete)
+            {
+                return false;
+            }
+
+            if (path.GetPathLength() > _maxPathLength)
+            {
+                return false;
+            }
 
             return true;
         }

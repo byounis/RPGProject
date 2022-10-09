@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +8,9 @@ namespace RPG.UI
     {
         [SerializeField] private Text _damageText;
 
-        public void SetText(string text)
+        public void SetValue(float amount)
         {
-            _damageText.text = text;
+            _damageText.text = $"{amount:0}";
         }
 
         //Used by animation event

@@ -14,7 +14,7 @@ namespace RPG.SceneManagement
             _canvasGroup.alpha = 1;
         }
 
-        private IEnumerator Fade(float target, float time)
+        private Coroutine Fade(float target, float time)
         {
             if (_currentlyActiveCoroutine != null)
             {
@@ -22,15 +22,15 @@ namespace RPG.SceneManagement
             }
             
             _currentlyActiveCoroutine = StartCoroutine(FadeRoutine(target, time));
-            yield return _currentlyActiveCoroutine;
+            return _currentlyActiveCoroutine;
         }
 
-        public IEnumerator FadeOut(float time)
+        public Coroutine FadeOut(float time)
         { 
             return Fade(1, time);
         }
         
-        public IEnumerator FadeIn(float time)
+        public Coroutine FadeIn(float time)
         {
             return Fade(0, time);
         }

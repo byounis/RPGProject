@@ -1,4 +1,5 @@
 using System.Collections;
+using RPG.Control;
 using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
@@ -42,13 +43,21 @@ namespace RPG.SceneManagement
             
             var fader = FindObjectOfType<Fader>();
             
-            yield return fader.FadeOut(_fadeOutTime);
+            //Remove control to avoid race conditions
+            var playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            playerController.enabled = false;
             
+            yield return fader.FadeOut(_fadeOutTime);
+
             // Save Current Level
             var savingWrapper = FindObjectOfType<SavingWrapper>();
             savingWrapper.Save();
             
             yield return SceneManager.LoadSceneAsync(_sceneToLoad);
+            
+            // Remove control to avoid race conditions from player in the next scene (new player in new scene)
+            playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            playerController.enabled = false;
             
             // Load Current level
             savingWrapper.Load();
@@ -58,8 +67,11 @@ namespace RPG.SceneManagement
             savingWrapper.Save();
             
             yield return new WaitForSeconds(_fadeWaitTime);
-            yield return fader.FadeIn(_fadeInTime);
-
+            fader.FadeIn(_fadeInTime);
+            
+            // Restore control
+            playerController.enabled = true;
+            
             Destroy(gameObject);
         }
 

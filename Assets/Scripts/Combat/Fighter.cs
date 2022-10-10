@@ -13,7 +13,7 @@ namespace RPG.Combat
     {
         [SerializeField] private ActionScheduler _actionScheduler;
         [SerializeField] private Mover _mover;
-        [SerializeField] private Weapon _defaultWeapon;
+        [SerializeField] private WeaponConfig _defaultWeaponConfig;
         [SerializeField] private Transform _rightHandTransform = null;
         [SerializeField] private Transform _leftHandTransform = null;
         
@@ -22,18 +22,18 @@ namespace RPG.Combat
         private float _timeSinceLastAttack = Mathf.Infinity;
         private static readonly int AttackAnimatorHash = Animator.StringToHash("Attack");
         private static readonly int StopAttackAnimatorHash = Animator.StringToHash("StopAttack");
-        private LazyValue<Weapon> _currentWeapon;
+        private LazyValue<WeaponConfig> _currentWeapon;
 
         private void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
-            _currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+            _currentWeapon = new LazyValue<WeaponConfig>(SetupDefaultWeapon);
         }
 
-        private Weapon SetupDefaultWeapon()
+        private WeaponConfig SetupDefaultWeapon()
         {
-            AttachWeapon(_defaultWeapon);
-            return _defaultWeapon;
+            AttachWeapon(_defaultWeaponConfig);
+            return _defaultWeaponConfig;
         }
 
         private void Start()
@@ -41,15 +41,15 @@ namespace RPG.Combat
             _currentWeapon.ForceInit();
         }
 
-        public void EquipWeapon(Weapon weapon)
+        public void EquipWeapon(WeaponConfig weaponConfig)
         {
-            _currentWeapon.value = weapon;
-            AttachWeapon(weapon);
+            _currentWeapon.value = weaponConfig;
+            AttachWeapon(weaponConfig);
         }
 
-        private void AttachWeapon(Weapon weapon)
+        private void AttachWeapon(WeaponConfig weaponConfig)
         {
-            weapon.Spawn(_rightHandTransform, _leftHandTransform, _animator);
+            weaponConfig.Spawn(_rightHandTransform, _leftHandTransform, _animator);
         }
 
         public Health GetTarget()
@@ -162,7 +162,7 @@ namespace RPG.Combat
         public void RestoreState(object state)
         {
             var weaponName = (string)state;
-            var weapon = Resources.Load<Weapon>(weaponName);
+            var weapon = Resources.Load<WeaponConfig>(weaponName);
             EquipWeapon(weapon);
         }
 

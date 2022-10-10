@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6085895546953961211}
+  - component: {fileID: -2413800790052732646}
   m_Layer: 0
   m_Name: Equipped_Sword
   m_TagString: Untagged
@@ -31,6 +32,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2413800790052732646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3306395100206736700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8be8643faa74941939540f170ed9ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2208301653105722226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -90,6 +103,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 13af847dfa6dbe844ba4b7c902f98f67, type: 3}
 --- !u!4 &2208301653105391996 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 489998, guid: 13af847dfa6dbe844ba4b7c902f98f67, type: 3}
+  m_CorrespondingSourceObject: {fileID: 489998, guid: 13af847dfa6dbe844ba4b7c902f98f67,
+    type: 3}
   m_PrefabInstance: {fileID: 2208301653105722226}
   m_PrefabAsset: {fileID: 0}

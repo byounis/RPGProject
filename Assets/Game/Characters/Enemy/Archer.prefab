@@ -33,6 +33,12 @@ PrefabInstance:
       propertyPath: _defaultWeaponName
       value: RedArrowBow
       objectReference: {fileID: 0}
+    - target: {fileID: 5672843462955462080, guid: 3bd1edea9a6039c419b821df96032974,
+        type: 3}
+      propertyPath: _defaultWeaponConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: e484b34c3cf846a4b862c66b12d839d5,
+        type: 2}
     - target: {fileID: 9141922463302169132, guid: 3bd1edea9a6039c419b821df96032974,
         type: 3}
       propertyPath: m_RootOrder

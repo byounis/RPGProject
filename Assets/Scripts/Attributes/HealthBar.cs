@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace RPG.Attributes
@@ -6,10 +7,21 @@ namespace RPG.Attributes
     {
         [SerializeField] private Health _health;
         [SerializeField] private RectTransform _foreground;
+        [SerializeField] private Canvas _rootCanvas;
         
+        
+
         private void Update()
         {
-            _foreground.localScale = new Vector3(_health.GetFraction(), 1, 1);
+            var healthFraction = _health.GetFraction();
+            if (Mathf.Approximately(healthFraction, 0f) || Mathf.Approximately(healthFraction, 1f))
+            {
+                _rootCanvas.enabled = false;
+                return;
+            }
+            
+            _rootCanvas.enabled = true;
+            _foreground.localScale = new Vector3(healthFraction, 1, 1);
         }
     }
 }

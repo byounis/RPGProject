@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5d2186568f4a3a8355924dc9b1466c, type: 3}
   m_Name: BlueArrowBow
   m_EditorClassIdentifier: 
-  _equippedPrefab: {fileID: 7507110042708043640, guid: a2185dcc164aaa44588d5e66179bbe45,
-    type: 3}
+  _weapon: {fileID: 2923641585206663903, guid: a2185dcc164aaa44588d5e66179bbe45, type: 3}
   _animatorOverride: {fileID: 22100000, guid: 504f743bb7de4f64a8b83164f7b7b3af, type: 2}
   _weaponRange: 20
   _percentageBonus: 20

@@ -25,21 +25,23 @@ namespace RPG.Combat
 
         private const string WeaponName = "Weapon";
         
-        public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
+        public Weapon Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
             DestroyOldWeapon(rightHand, leftHand);
+
+            Weapon weapon = null;
             
             if (_weapon != null)
             {
                 var transform = GetTransform(rightHand, leftHand);
-                var weapon = Instantiate(_weapon, transform);
+                weapon = Instantiate(_weapon, transform);
                 weapon.gameObject.name = WeaponName;
             }
             
             if (_animatorOverride != null)
             {
                 animator.runtimeAnimatorController = _animatorOverride;
-                return;
+                return weapon;
             }
             
             var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
@@ -47,6 +49,8 @@ namespace RPG.Combat
             {
                 animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
             }
+
+            return weapon;
         }
 
         private void DestroyOldWeapon(Transform rightHand, Transform leftHand)

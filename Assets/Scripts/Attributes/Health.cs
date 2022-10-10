@@ -12,6 +12,7 @@ namespace RPG.Attributes
     {
         [SerializeField] private float _regenerationPercentage = 70f;
         [SerializeField] private UnityEvent<float> _takeDamage;
+        [SerializeField] private UnityEvent _onDie;
         
         private LazyValue<float> _healthPoints;
         private Animator _animator;
@@ -57,6 +58,7 @@ namespace RPG.Attributes
 
             if (_healthPoints.value == 0)
             {
+                _onDie.Invoke();
                 Die();
                 //BUG: We award experience when you attack an enemy that is currently in the dying animation.
                 //Which results in being rewarded twice.

@@ -17,6 +17,7 @@ namespace RPG.Control
         [SerializeField] private float _waypointTolerance = 0.5f;
         [SerializeField] private float _waypointDwellTime = 3f;
         [SerializeField, Min(0), Range(0,1)] private float _patrolSpeedFraction = 0.2f;
+        [SerializeField] private float _shoutDistance = 5f;
         
         private GameObject _player;
         private Fighter _fighter;
@@ -56,7 +57,6 @@ namespace RPG.Control
             
             if (IsAggravated(_player) && _fighter.CanAttack(_player))
             {
-                _timeSinceLastSawPlayer = 0;
                 AttackBehaviour();
             }
             else if (_timeSinceLastSawPlayer < _suspiciousTime)
@@ -132,7 +132,25 @@ namespace RPG.Control
 
         private void AttackBehaviour()
         {
+            _timeSinceLastSawPlayer = 0;
             _fighter.Attack(_player);
+            
+            AggravateNearbyEnemies();
+        }
+
+        private void AggravateNearbyEnemies()
+        {
+            var hits = Physics.SphereCastAll(transform.position, _shoutDistance, Vector3.up, 0);
+            foreach (var hit in hits)
+            {
+                var otherAi = hit.transform.GetComponent<AiController>();
+                if (otherAi == null)
+                {
+                    continue;
+                }
+                
+                otherAi.Aggravate();
+            }
         }
 
         private void OnDrawGizmosSelected()

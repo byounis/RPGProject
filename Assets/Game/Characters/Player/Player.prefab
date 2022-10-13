@@ -126,6 +126,11 @@ PrefabInstance:
       propertyPath: _uniqueIdentifier
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1419056975977622495, guid: e9775cbefb0e0d94e960f27342ff57e0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1523694177340802479, guid: e9775cbefb0e0d94e960f27342ff57e0,
         type: 3}
       propertyPath: m_Name
@@ -238,6 +243,11 @@ PrefabInstance:
       propertyPath: _healthPoints
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 8692315434315654857, guid: e9775cbefb0e0d94e960f27342ff57e0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8698899706059484073, guid: e9775cbefb0e0d94e960f27342ff57e0,
         type: 3}
       propertyPath: _shouldUseModifiers
@@ -291,6 +301,8 @@ MonoBehaviour:
   - CursorType: 4
     Texture: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
     HotSpot: {x: 0, y: 0}
+  _maxDistanceNavMeshProjection: 1
+  _sphereCastRadius: 0.25
 --- !u!114 &1161197750353630159
 MonoBehaviour:
   m_ObjectHideFlags: 0

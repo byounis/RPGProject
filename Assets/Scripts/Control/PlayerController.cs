@@ -21,6 +21,7 @@ namespace RPG.Control
 
         [SerializeField] private CursorMapping[] _cursorMappings;
         [SerializeField] private int _maxDistanceNavMeshProjection = 1;
+        [SerializeField] private float _sphereCastRadius = 1;
         
         private Mover _mover;
         private Camera _mainCamera;
@@ -87,7 +88,7 @@ namespace RPG.Control
 
         private RaycastHit[] RaycastAllSorted()
         {
-            var hits = Physics.RaycastAll(GetMouseRay());
+            var hits = Physics.SphereCastAll(GetMouseRay(), _sphereCastRadius);
             var distances = new float[hits.Length];
             for (var index = 0; index < hits.Length; index++)
             {

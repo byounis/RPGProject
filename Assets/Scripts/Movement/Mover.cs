@@ -1,6 +1,7 @@
 using System;
 using RPG.Attributes;
 using RPG.Core;
+using RPG.Helpers;
 using RPG.Saving;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,6 +12,7 @@ namespace RPG.Movement
     {
         [SerializeField] private ActionScheduler _actionScheduler;
         [SerializeField] private float _maxSpeed = 6f;
+        [SerializeField] private float _maxPathLength = 40f;
 
         private static readonly int ForwardSpeedAnimatorParameterID = Animator.StringToHash("ForwardSpeed");
         private Animator _animator;
@@ -35,6 +37,24 @@ namespace RPG.Movement
         {
             _actionScheduler.StartAction(this);
             MoveTo(destination, speedFraction);
+        }
+
+        public bool CanMoveTo(Vector3 destination)
+        {
+            var path = new NavMeshPath();
+            var hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
+
+            if (!hasPath || path.status != NavMeshPathStatus.PathComplete)
+            {
+                return false;
+            }
+
+            if (path.GetPathLength() > _maxPathLength)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void MoveTo(Vector3 destination, float speedFraction = 1)

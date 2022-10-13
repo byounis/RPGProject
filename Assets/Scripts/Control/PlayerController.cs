@@ -21,17 +21,14 @@ namespace RPG.Control
 
         [SerializeField] private CursorMapping[] _cursorMappings;
         [SerializeField] private int _maxDistanceNavMeshProjection = 1;
-        [SerializeField] private float _maxPathLength = 40f;
         
         private Mover _mover;
-        private Fighter _fighter;
         private Camera _mainCamera;
         private Health _health;
 
         private void Awake()
         {
             _mover = GetComponent<Mover>();
-            _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();
         }
 
@@ -122,6 +119,11 @@ namespace RPG.Control
             {
                 return false;
             }
+
+            if (!GetComponent<Mover>().CanMoveTo(target))
+            {
+                return false;
+            }
             
             if (Input.GetMouseButton(0))
             {
@@ -152,19 +154,6 @@ namespace RPG.Control
             }
             
             target = navMeshHit.position;
-
-            var path = new NavMeshPath();
-            var hasPath = NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, path);
-
-            if (!hasPath || path.status != NavMeshPathStatus.PathComplete)
-            {
-                return false;
-            }
-
-            if (path.GetPathLength() > _maxPathLength)
-            {
-                return false;
-            }
 
             return true;
         }

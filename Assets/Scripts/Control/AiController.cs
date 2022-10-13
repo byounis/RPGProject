@@ -12,6 +12,7 @@ namespace RPG.Control
     {
         [SerializeField] private float _chaseDistance = 5f;
         [SerializeField] private float _suspiciousTime = 2f;
+        [SerializeField] private float _aggravationCooldownTime = 3f;
         [SerializeField] private PatrolPath _patrolPath;
         [SerializeField] private float _waypointTolerance = 0.5f;
         [SerializeField] private float _waypointDwellTime = 3f;
@@ -26,6 +27,7 @@ namespace RPG.Control
         private LazyValue<Vector3> _guardPosition;
         private float _timeSinceLastSawPlayer = Mathf.Infinity;
         private float _timeSinceArrivedAtWaypoint = Mathf.Infinity;
+        private float _timeSinceAggravated = Mathf.Infinity;
         private int _currentWaypointIndex;
 
         private void Awake()
@@ -52,7 +54,7 @@ namespace RPG.Control
                 return;
             }
             
-            if (InChaseRange(_player) && _fighter.CanAttack(_player))
+            if (IsAggravated(_player) && _fighter.CanAttack(_player))
             {
                 _timeSinceLastSawPlayer = 0;
                 AttackBehaviour();
@@ -69,15 +71,21 @@ namespace RPG.Control
             UpdateTimers();
         }
 
+        public void Aggravate()
+        {
+            _timeSinceAggravated = 0;
+        }
+
         private void UpdateTimers()
         {
             _timeSinceLastSawPlayer += Time.deltaTime;
             _timeSinceArrivedAtWaypoint += Time.deltaTime;
+            _timeSinceAggravated += Time.deltaTime;
         }
 
-        private bool InChaseRange(GameObject go)
+        private bool IsAggravated(GameObject go)
         {
-            return Vector3.Distance(transform.position, go.transform.position) < _chaseDistance;
+            return _timeSinceAggravated < _aggravationCooldownTime || Vector3.Distance(transform.position, go.transform.position) < _chaseDistance;
         }
 
         private void PatrolBehaviour()

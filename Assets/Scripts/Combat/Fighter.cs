@@ -67,7 +67,7 @@ namespace RPG.Combat
                 return;
             }
             
-            if (!InRange())
+            if (!InRange(_target.transform))
             {
                 _mover.MoveTo(_target.transform.position);
             }
@@ -78,9 +78,9 @@ namespace RPG.Combat
             }
         }
 
-        private bool InRange()
+        private bool InRange(Transform target)
         {
-            return Vector3.Distance(_target.transform.position, transform.position) < _currentWeaponConfig.WeaponRange;
+            return Vector3.Distance(target.transform.position, transform.position) < _currentWeaponConfig.WeaponRange;
         }
         
         private void AttackBehaviour()
@@ -101,7 +101,7 @@ namespace RPG.Combat
                 return false;
             }
             
-            if (!GetComponent<Mover>().CanMoveTo(combatTarget.transform.position))
+            if (!InRange(combatTarget.transform) && !GetComponent<Mover>().CanMoveTo(combatTarget.transform.position))
             {
                 return false;
             }

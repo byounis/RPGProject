@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using GameDevTV.Inventories;
 using GameDevTV.Utils;
 using RPG.Attributes;
 using RPG.Core;
 using RPG.Movement;
-using RPG.Saving;
+using GameDevTV.Saving;
 using RPG.Stats;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace RPG.Combat
         [SerializeField] private Transform _leftHandTransform = null;
         
         private Health _target;
+        private Equipment _equipment;
         private Animator _animator;
         private float _timeSinceLastAttack = Mathf.Infinity;
         private static readonly int AttackAnimatorHash = Animator.StringToHash("Attack");
@@ -30,6 +32,12 @@ namespace RPG.Combat
             _animator = GetComponentInChildren<Animator>();
             _currentWeaponConfig = _defaultWeaponConfig;
             _currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+
+            _equipment = GetComponent<Equipment>();
+            if (_equipment != null)
+            {
+                _equipment.equipmentUpdated += UpdateWeapon;
+            }
         }
 
         private Weapon SetupDefaultWeapon()
@@ -46,6 +54,13 @@ namespace RPG.Combat
         {
             _currentWeaponConfig = weaponConfig;
             _currentWeapon.value = AttachWeapon(weaponConfig);
+        }
+
+        private void UpdateWeapon()
+        {
+            var weaponConfig = _equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;
+
+            EquipWeapon(weaponConfig != null ? weaponConfig : _defaultWeaponConfig);
         }
 
         private Weapon AttachWeapon(WeaponConfig weaponConfig)

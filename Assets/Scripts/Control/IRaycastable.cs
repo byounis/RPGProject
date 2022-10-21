@@ -1,3 +1,5 @@
+using System;
+
 namespace RPG.Control
 {
     public interface IRaycastable

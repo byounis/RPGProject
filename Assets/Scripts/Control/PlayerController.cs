@@ -26,6 +26,7 @@ namespace RPG.Control
         private Mover _mover;
         private Camera _mainCamera;
         private Health _health;
+        private bool _isDraggingUI;
 
         private void Awake()
         {
@@ -101,19 +102,27 @@ namespace RPG.Control
 
         private bool InteractWithUI()
         {
+            if (Input.GetMouseButtonUp(0))
+            {
+                _isDraggingUI = false;
+            }
+            
             if (EventSystem.current.IsPointerOverGameObject())
             {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    _isDraggingUI = true;
+                }
+                
                 SetCursor(CursorType.UI);
                 return true;
             }
-            
-            return false;
+
+            return _isDraggingUI;
         }
 
         private bool InteractWithMovement()
         {
-            // var ray = GetMouseRay();
-            // var isHit = Physics.Raycast(ray, out var hitInfo);
             var isHit = RaycastNavMesh(out var target);
 
             if (!isHit)

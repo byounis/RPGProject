@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
-using RPG.Saving;
+using GameDevTV.Saving;
 using RPG.SceneManagement;
 using UnityEngine;
 
 namespace RPG.Core
 {
+    //TODO: Add serialize fields for saving keys
     public class SavingWrapper : MonoBehaviour
     {
         private const string DefaultSaveFile = "save";
@@ -19,7 +20,7 @@ namespace RPG.Core
 
         private IEnumerator LoadLastScene()
         {
-            yield return SavingSystem.LoadLastScene(DefaultSaveFile);
+            yield return GetComponent<SavingSystem>().LoadLastScene(DefaultSaveFile);
             var fader = FindObjectOfType<Fader>();
             fader.FadeOutImmediate();
             yield return fader.FadeIn(_fadeInTime);
@@ -45,17 +46,17 @@ namespace RPG.Core
 
         public void Load()
         {
-            SavingSystem.Load(DefaultSaveFile);
+            StartCoroutine(GetComponent<SavingSystem>().LoadLastScene(DefaultSaveFile));
         }
 
         public void Save()
         {
-            SavingSystem.Save(DefaultSaveFile);
+            GetComponent<SavingSystem>().Save(DefaultSaveFile);
         }
 
         public void Delete()
         {
-            SavingSystem.Delete(DefaultSaveFile);
+            GetComponent<SavingSystem>().Delete(DefaultSaveFile);
         }
     }
 }

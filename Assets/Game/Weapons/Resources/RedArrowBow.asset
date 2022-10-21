@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5d2186568f4a3a8355924dc9b1466c, type: 3}
   m_Name: RedArrowBow
   m_EditorClassIdentifier: 
+  itemID: 7f19039e-2bdf-48f2-93db-45ee390e110e
+  displayName: Red Arrow Bow
+  description: 
+  icon: {fileID: 21300000, guid: f8078c2bb5ee88d4a9472f76e501e0f3, type: 3}
+  pickup: {fileID: 0}
+  stackable: 0
+  allowedEquipLocation: 5
   _weapon: {fileID: 2923641585206663903, guid: a2185dcc164aaa44588d5e66179bbe45, type: 3}
   _animatorOverride: {fileID: 22100000, guid: 504f743bb7de4f64a8b83164f7b7b3af, type: 2}
   _weaponRange: 20

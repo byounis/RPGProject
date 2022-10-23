@@ -46,7 +46,7 @@ namespace RPG.Core
 
         public void Load()
         {
-            StartCoroutine(GetComponent<SavingSystem>().LoadLastScene(DefaultSaveFile));
+            GetComponent<SavingSystem>().Load(DefaultSaveFile);
         }
 
         public void Save()

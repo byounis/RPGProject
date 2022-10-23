@@ -1,12 +1,14 @@
 using System;
+using System.Collections.Generic;
 using GameDevTV.Inventories;
 using RPG.Attributes;
+using RPG.Stats;
 using UnityEngine;
 
 namespace RPG.Combat
 {
     [CreateAssetMenu(fileName = "Weapon", menuName = "RPG Project/New Weapon", order = 0)]
-    public class WeaponConfig : EquipableItem
+    public class WeaponConfig : EquipableItem, IModifierProvider
     {
         [SerializeField] private Weapon _weapon;
         [SerializeField] private AnimatorOverrideController _animatorOverride;
@@ -75,6 +77,22 @@ namespace RPG.Combat
             var transform = GetTransform(rightHand, leftHand);
             var projectileInstance = Instantiate(_projectile, transform.position, Quaternion.identity);
             projectileInstance.SetTarget(target, instigator, calculatedDamage);
+        }
+
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return _weaponDamage;
+            }
+        }
+
+        public IEnumerable<float> GetPercentageModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return _percentageBonus;
+            }
         }
     }
 }

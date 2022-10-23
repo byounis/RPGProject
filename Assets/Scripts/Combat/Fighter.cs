@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
+    public class Fighter : MonoBehaviour, IAction, ISaveable
     {
         [SerializeField] private ActionScheduler _actionScheduler;
         [SerializeField] private Mover _mover;
@@ -166,22 +166,6 @@ namespace RPG.Combat
         {
             _animator.ResetTrigger(AttackAnimatorHash);
             _animator.SetTrigger(StopAttackAnimatorHash);
-        }
-        
-        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
-        {
-            if (stat == Stat.Damage)
-            {
-                yield return _currentWeaponConfig.WeaponDamage;
-            }
-        }
-        
-        public IEnumerable<float> GetPercentageModifiers(Stat stat)
-        {
-            if (stat == Stat.Damage)
-            {
-                yield return _currentWeaponConfig.PercentageBonus;
-            }
         }
 
         #region Saving

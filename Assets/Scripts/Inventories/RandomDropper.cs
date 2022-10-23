@@ -1,4 +1,5 @@
 using GameDevTV.Inventories;
+using RPG.Stats;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,19 +7,19 @@ namespace RPG.Inventories
 {
     public class RandomDropper : ItemDropper
     {
-        [Tooltip("How far can the pickups be scattered from the droppper.")]
+        [Tooltip("How far can the pickups be scattered from the dropper.")]
         [SerializeField] private float _scatterDistance = 1;
-        [SerializeField] private InventoryItem[] _dropLibrary;
-        [SerializeField] private int _numberOfDrops = 2;
+        [SerializeField] private DropLibrary _dropLibrary;
         
         private const int Attempts = 30;
 
         public void RandomDrop()
         {
-            for (var i = 0; i < _numberOfDrops; i++)
+            var baseStats = GetComponent<BaseStats>();
+            var drops = _dropLibrary.GetRandomDrops(baseStats.GetLevel());
+            foreach (var drop in drops)
             {
-                var item = _dropLibrary[Random.Range(0, _dropLibrary.Length)];
-                DropItem(item, 1);
+                DropItem(drop.Item, drop.Number);
             }
         }
         

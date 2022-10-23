@@ -5,7 +5,7 @@ using UnityEngine;
 namespace RPG.Stats
 {
     //TODO: Create Property Drawer to show level and value rather than element number of the array
-    [CreateAssetMenu(fileName = "New Progression", menuName = "RPG Project/Progression", order = 0)]
+    [CreateAssetMenu(fileName = "New Progression", menuName = "RPG/Progression", order = 0)]
     public class Progression : ScriptableObject
     {
         [Serializable]

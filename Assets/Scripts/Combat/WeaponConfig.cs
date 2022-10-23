@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-    [CreateAssetMenu(fileName = "Weapon", menuName = "RPG Project/New Weapon", order = 0)]
+    [CreateAssetMenu(fileName = "Weapon", menuName = "RPG/New Weapon", order = 0)]
     public class WeaponConfig : EquipableItem, IModifierProvider
     {
         [SerializeField] private Weapon _weapon;

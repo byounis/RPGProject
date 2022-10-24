@@ -63,7 +63,10 @@ namespace RPG.Dialogue.Editor
             }
             else
             {
-                EditorGUILayout.LabelField(_selectedDialogue.name);
+                foreach (var dialogueNode in _selectedDialogue.GetAllNodes())
+                {
+                    EditorGUILayout.LabelField(dialogueNode.Text);
+                }
             }
         }
     }

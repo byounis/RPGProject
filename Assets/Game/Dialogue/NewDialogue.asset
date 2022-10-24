@@ -24,9 +24,3 @@ MonoBehaviour:
   - UniqueID: c
     Text: Go away!
     Children: []
-  - UniqueID: d
-    Text: 
-    Children: []
-  - UniqueID: e
-    Text: 
-    Children: []

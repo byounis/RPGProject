@@ -1,4 +1,6 @@
 using System;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RPG.Dialogue
 {
@@ -8,5 +10,6 @@ namespace RPG.Dialogue
         public string UniqueID;
         public string Text;
         public string[] Children;
+        public Rect Rect = new Rect(0,0,200,100);
     }
 }

@@ -16,12 +16,12 @@ MonoBehaviour:
   - UniqueID: a
     Text: Hello
     Children:
-    - b
     - c
+    - b
     Rect:
       serializedVersion: 2
-      x: 61
-      y: 289
+      x: 11
+      y: 335
       width: 200
       height: 100
   - UniqueID: b
@@ -29,8 +29,8 @@ MonoBehaviour:
     Children: []
     Rect:
       serializedVersion: 2
-      x: 300
-      y: 203
+      x: 279
+      y: 263
       width: 200
       height: 100
   - UniqueID: c
@@ -38,7 +38,7 @@ MonoBehaviour:
     Children: []
     Rect:
       serializedVersion: 2
-      x: 294
-      y: 401
+      x: 288
+      y: 452
       width: 200
       height: 100

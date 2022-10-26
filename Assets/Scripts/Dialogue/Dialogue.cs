@@ -8,17 +8,24 @@ namespace RPG.Dialogue
     [CreateAssetMenu(fileName = "NewDialogue", menuName = "RPG/Dialogue", order = 0)]
     public class Dialogue : ScriptableObject
     {
-        [SerializeField] private List<DialogueNode> _dialogueNodes;
+        [SerializeField] private List<DialogueNode> _dialogueNodes = new List<DialogueNode>();
 
         private readonly Dictionary<string, DialogueNode> _dialogueNodeLookup = new Dictionary<string, DialogueNode>();
 
 #if UNITY_EDITOR
         private void Awake()
         {
-            if (_dialogueNodes.Count == 0)
+            if (_dialogueNodes.Count != 0)
             {
-                _dialogueNodes.Add(new DialogueNode());
+                return;
             }
+            
+            var rootNode = new DialogueNode
+            {
+                UniqueID = Guid.NewGuid().ToString()
+            };
+            
+            _dialogueNodes.Add(rootNode);
         }
 #else
         private void Awake()
@@ -55,6 +62,19 @@ namespace RPG.Dialogue
                     yield return _dialogueNodeLookup[id];
                 }
             }
+        }
+
+        public void CreateNode(DialogueNode parentNode)
+        {
+            var newNode = new DialogueNode
+            {
+                UniqueID = Guid.NewGuid().ToString()
+            };
+            
+            _dialogueNodes.Add(newNode);
+            parentNode.Children.Add(newNode.UniqueID);
+            
+            OnValidate();
         }
     }
 }

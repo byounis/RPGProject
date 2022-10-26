@@ -8,9 +8,11 @@ namespace RPG.Dialogue.Editor
     public class DialogueEditor : EditorWindow
     {
         private Dialogue _selectedDialogue = null;
-        private GUIStyle _nodeStyle;
-        private DialogueNode _draggingNode;
-        private Vector2 _draggingOffset;
+        
+        [NonSerialized] private GUIStyle _nodeStyle;
+        [NonSerialized] private DialogueNode _draggingNode;
+        [NonSerialized] private Vector2 _draggingOffset;
+        [NonSerialized] private DialogueNode _creatingNode = null;
 
         [MenuItem("Window/Dialogue Editor")]
         private static void ShowWindow()
@@ -68,20 +70,26 @@ namespace RPG.Dialogue.Editor
             if (_selectedDialogue == null)
             {
                 EditorGUILayout.LabelField("No Dialogue Selected");
-                
+                return;
             }
-            else
+            
+            ProcessEvents();
+            
+            foreach (var dialogueNode in _selectedDialogue.GetAllNodes())
             {
-                ProcessEvents();
-                foreach (var dialogueNode in _selectedDialogue.GetAllNodes())
-                {
-                    DrawConnections(dialogueNode);
-                }
-                
-                foreach (var dialogueNode in _selectedDialogue.GetAllNodes())
-                {
-                    DrawNode(dialogueNode);
-                }
+                DrawConnections(dialogueNode);
+            }
+            
+            foreach (var dialogueNode in _selectedDialogue.GetAllNodes())
+            {
+                DrawNode(dialogueNode);
+            }
+
+            if (_creatingNode != null)
+            {
+                Undo.RecordObject(_selectedDialogue, "Added Dialogue Node");
+                _selectedDialogue.CreateNode(_creatingNode);
+                _creatingNode = null;
             }
         }
 
@@ -126,15 +134,17 @@ namespace RPG.Dialogue.Editor
             GUILayout.BeginArea(dialogueNode.Rect, _nodeStyle);
             EditorGUI.BeginChangeCheck();
 
-            EditorGUILayout.LabelField("Node:", EditorStyles.boldLabel);
-            var newUniqueID = EditorGUILayout.TextField(dialogueNode.UniqueID);
             var newText = EditorGUILayout.TextField(dialogueNode.Text);
 
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(_selectedDialogue, "Update Dialogue Node");
                 dialogueNode.Text = newText;
-                dialogueNode.UniqueID = newUniqueID;
+            }
+
+            if (GUILayout.Button("+"))
+            {
+                _creatingNode = dialogueNode;
             }
             
             GUILayout.EndArea();

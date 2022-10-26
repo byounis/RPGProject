@@ -75,7 +75,12 @@ namespace RPG.Dialogue.Editor
                 ProcessEvents();
                 foreach (var dialogueNode in _selectedDialogue.GetAllNodes())
                 {
-                    OnGUINode(dialogueNode);
+                    DrawConnections(dialogueNode);
+                }
+                
+                foreach (var dialogueNode in _selectedDialogue.GetAllNodes())
+                {
+                    DrawNode(dialogueNode);
                 }
             }
         }
@@ -116,7 +121,7 @@ namespace RPG.Dialogue.Editor
             return foundNode;
         }
 
-        private void OnGUINode(DialogueNode dialogueNode)
+        private void DrawNode(DialogueNode dialogueNode)
         {
             GUILayout.BeginArea(dialogueNode.Rect, _nodeStyle);
             EditorGUI.BeginChangeCheck();
@@ -131,13 +136,29 @@ namespace RPG.Dialogue.Editor
                 dialogueNode.Text = newText;
                 dialogueNode.UniqueID = newUniqueID;
             }
-
-            foreach (var childNode in _selectedDialogue.GetAllChildren(dialogueNode))
-            {
-                EditorGUILayout.LabelField(childNode.Text);
-            }
             
             GUILayout.EndArea();
+        }
+
+        private void DrawConnections(DialogueNode dialogueNode)
+        {
+            Vector3 startPosition = new Vector2(dialogueNode.Rect.xMax, dialogueNode.Rect.center.y);
+            foreach (var childNode in _selectedDialogue.GetAllChildren(dialogueNode))
+            {
+                Vector3 endPosition = new Vector2(childNode.Rect.xMin, childNode.Rect.center.y);
+                var controlPointOffset = endPosition - startPosition;
+                controlPointOffset.y = 0;
+                controlPointOffset.x *= 0.8f;
+                
+                Handles.DrawBezier(
+                    startPosition,
+                    endPosition,
+                    startPosition + controlPointOffset,
+                    endPosition - controlPointOffset,
+                    Color.black,
+                    null,
+                    4f);
+            }
         }
     }
 }

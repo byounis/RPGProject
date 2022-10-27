@@ -14,6 +14,7 @@ namespace RPG.Dialogue.Editor
         private Vector2 _scrollPosition;
         
         [NonSerialized] private GUIStyle _nodeStyle;
+        [NonSerialized] private GUIStyle _playerNodeStyle;
         [NonSerialized] private DialogueNode _draggingNode;
         [NonSerialized] private Vector2 _draggingOffset;
         [NonSerialized] private DialogueNode _creatingNode;
@@ -48,10 +49,25 @@ namespace RPG.Dialogue.Editor
         {
             Selection.selectionChanged += SelectionChanged;
 
-            _nodeStyle = new GUIStyle();
-            _nodeStyle.normal.background = EditorGUIUtility.Load("node0") as Texture2D;
-            _nodeStyle.padding = new RectOffset(20, 20, 20, 20);
-            _nodeStyle.border = new RectOffset(12, 12, 12, 12);
+            _nodeStyle = new GUIStyle
+            {
+                normal =
+                {
+                    background = EditorGUIUtility.Load("node0") as Texture2D
+                },
+                padding = new RectOffset(20, 20, 20, 20),
+                border = new RectOffset(12, 12, 12, 12)
+            };
+
+            _playerNodeStyle = new GUIStyle
+            {
+                normal =
+                {
+                    background = EditorGUIUtility.Load("node1") as Texture2D
+                },
+                padding = new RectOffset(20, 20, 20, 20),
+                border = new RectOffset(12, 12, 12, 12)
+            };
         }
         
         private void OnDisable()
@@ -65,12 +81,8 @@ namespace RPG.Dialogue.Editor
             if (activeDialogue != null)
             {
                 _selectedDialogue = activeDialogue;
+                Repaint();
             }
-            else
-            {
-                _selectedDialogue = null;
-            }
-            Repaint();
         }
 
         private void OnGUI()
@@ -104,14 +116,12 @@ namespace RPG.Dialogue.Editor
 
             if (_creatingNode != null)
             {
-                Undo.RecordObject(_selectedDialogue, "Added Dialogue Node");
                 _selectedDialogue.CreateNode(_creatingNode);
                 _creatingNode = null;
             }
             
             if (_deletingNode != null)
             {
-                Undo.RecordObject(_selectedDialogue, "Deleted Dialogue Node");
                 _selectedDialogue.DeleteNode(_deletingNode);
                 _deletingNode = null;
             }
@@ -124,18 +134,19 @@ namespace RPG.Dialogue.Editor
                 _draggingNode = GetNodeAtPoint(Event.current.mousePosition + _scrollPosition);
                 if (_draggingNode != null)
                 {
-                    _draggingOffset = _draggingNode.Rect.position - Event.current.mousePosition;
+                    _draggingOffset = _draggingNode.GetRect().position - Event.current.mousePosition;
+                    Selection.activeObject = _draggingNode;
                 }
                 else
                 {
                     _draggingCanvas = true;
                     _draggingCanvasOffset = Event.current.mousePosition + _scrollPosition;
+                    Selection.activeObject = _selectedDialogue;
                 }
             }
             else if (Event.current.type == EventType.MouseDrag && _draggingNode != null)
             {
-                Undo.RecordObject(_selectedDialogue, "Move Dialogue Node");
-                _draggingNode.Rect.position = Event.current.mousePosition + _draggingOffset;
+                _draggingNode.SetPosition(Event.current.mousePosition + _draggingOffset);
                 
                 GUI.changed = true;
             }
@@ -160,7 +171,7 @@ namespace RPG.Dialogue.Editor
             DialogueNode foundNode = null;
             foreach (var node in _selectedDialogue.GetAllNodes())
             {
-                if (node.Rect.Contains(point))
+                if (node.GetRect().Contains(point))
                 {
                     foundNode = node;
                 }
@@ -171,17 +182,16 @@ namespace RPG.Dialogue.Editor
 
         private void DrawNode(DialogueNode dialogueNode)
         {
-            GUILayout.BeginArea(dialogueNode.Rect, _nodeStyle);
-            EditorGUI.BeginChangeCheck();
-
-            var newText = EditorGUILayout.TextField(dialogueNode.Text);
-
-            if (EditorGUI.EndChangeCheck())
+            var style = _nodeStyle;
+            if (dialogueNode.IsPlayerSpeaking())
             {
-                Undo.RecordObject(_selectedDialogue, "Update Dialogue Node");
-                dialogueNode.Text = newText;
+                style = _playerNodeStyle;
             }
             
+            GUILayout.BeginArea(dialogueNode.GetRect(), style);
+
+            dialogueNode.SetText(EditorGUILayout.TextField(dialogueNode.GetText()));
+
             EditorGUILayout.Space();
             
             GUILayout.BeginHorizontal();
@@ -223,12 +233,11 @@ namespace RPG.Dialogue.Editor
                     _linkingParentNode = null;
                 }
             }
-            else if (_linkingParentNode.Children.Contains(dialogueNode.UniqueID))
+            else if (_linkingParentNode.GetChildren().Contains(dialogueNode.name))
             {
                 if (GUILayout.Button("Unlink"))
                 {
-                    Undo.RecordObject(_selectedDialogue, "Removed Dialogue Link");
-                    _linkingParentNode.Children.Remove(dialogueNode.UniqueID);
+                    _linkingParentNode.RemoveChild(dialogueNode.name);
                     _linkingParentNode = null;
                 }
             }
@@ -236,8 +245,7 @@ namespace RPG.Dialogue.Editor
             {
                 if (GUILayout.Button("Child"))
                 {
-                    Undo.RecordObject(_selectedDialogue, "Add Dialogue Link");
-                    _linkingParentNode.Children.Add(dialogueNode.UniqueID);
+                    _linkingParentNode.AddChild(dialogueNode.name);
                     _linkingParentNode = null;
                 }
             }
@@ -245,10 +253,10 @@ namespace RPG.Dialogue.Editor
 
         private void DrawConnections(DialogueNode dialogueNode)
         {
-            Vector3 startPosition = new Vector2(dialogueNode.Rect.xMax, dialogueNode.Rect.center.y);
+            Vector3 startPosition = new Vector2(dialogueNode.GetRect().xMax, dialogueNode.GetRect().center.y);
             foreach (var childNode in _selectedDialogue.GetAllChildren(dialogueNode))
             {
-                Vector3 endPosition = new Vector2(childNode.Rect.xMin, childNode.Rect.center.y);
+                Vector3 endPosition = new Vector2(childNode.GetRect().xMin, childNode.GetRect().center.y);
                 var controlPointOffset = endPosition - startPosition;
                 controlPointOffset.y = 0;
                 controlPointOffset.x *= 0.8f;

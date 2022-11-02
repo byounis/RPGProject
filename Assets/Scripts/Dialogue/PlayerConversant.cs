@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,14 +9,38 @@ namespace RPG.Dialogue
 {
     public class PlayerConversant : MonoBehaviour
     {
-        [SerializeField] private Dialogue _currentDialogue;
-
+        [SerializeField] private Dialogue _testDialogue;
+        
+        private Dialogue _currentDialogue;
         private DialogueNode _currentNode;
         private bool _isChoosing;
+        
+        public event Action OnConversationUpdated;
 
-        private void Awake()
+        private IEnumerator Start()
         {
+            yield return new WaitForSeconds(3);
+            StartDialogue(_testDialogue);
+        }
+
+        public void StartDialogue(Dialogue newDialogue)
+        {
+            _currentDialogue = newDialogue;
             _currentNode = _currentDialogue.GetRootNode();
+            OnConversationUpdated.Invoke();
+        }
+
+        public void Quit()
+        {
+            _currentDialogue = null;
+            _currentNode = null;
+            _isChoosing = false;
+            OnConversationUpdated.Invoke();
+        }
+
+        public bool IsDialogueActive()
+        {
+            return _currentDialogue != null;
         }
 
         public bool IsChoosing()
@@ -41,6 +66,7 @@ namespace RPG.Dialogue
         public void SelectChoice(DialogueNode chosenNode)
         {
             _currentNode = chosenNode;
+            _isChoosing = false;
             Next();
         }
 
@@ -51,12 +77,14 @@ namespace RPG.Dialogue
             if (numberOfPlayerResponses > 0)
             {
                 _isChoosing = true;
+                OnConversationUpdated.Invoke();
                 return;
             }
             
             _isChoosing = false;
             var childNodes = _currentDialogue.GetAIChildren(_currentNode).ToArray();
             _currentNode = childNodes[Random.Range(0, childNodes.Length)];
+            OnConversationUpdated.Invoke();
         }
 
         public bool HasNext()

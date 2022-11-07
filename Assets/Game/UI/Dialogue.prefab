@@ -743,6 +743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _aiText: {fileID: 5385573035292378022}
+  _conversantNameText: {fileID: 1678875719187259452}
   _nextButton: {fileID: 3750110010451795117}
   _quitButton: {fileID: 2370057151709456949}
   _aiResponse: {fileID: 4903873716798557042}

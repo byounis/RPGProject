@@ -7,8 +7,11 @@ namespace RPG.Dialogue
     public class AIConversant : MonoBehaviour, IRaycastable
     {
         [SerializeField] private Dialogue _dialogue;
+        [SerializeField] private string _conversantName = "DefaultAiConversantName";
         
         private DialogueTrigger[] _dialogueTriggers;
+
+        public string ConversantName => _conversantName;
 
         private void Start()
         {

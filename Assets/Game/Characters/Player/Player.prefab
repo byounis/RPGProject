@@ -373,7 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c230639f23a442dbab3e5dd000880eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testDialogue: {fileID: 11400000, guid: 0b119b80d0dc9ec4dbb18dd7e5b8e4cc, type: 2}
+  _playerName: Smoochie Wallas
 --- !u!114 &7494936953468644932
 MonoBehaviour:
   m_ObjectHideFlags: 0

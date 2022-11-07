@@ -12,18 +12,23 @@ namespace RPG.Dialogue
         private Dialogue _currentDialogue;
         private DialogueNode _currentNode;
         private bool _isChoosing;
+        private AIConversant _currentConversant;
         
         public event Action OnConversationUpdated;
 
-        public void StartDialogue(Dialogue newDialogue)
+        public void StartDialogue(AIConversant newConversant, Dialogue newDialogue)
         {
+            _currentConversant = newConversant;
             _currentDialogue = newDialogue;
             _currentNode = _currentDialogue.GetRootNode();
+            TriggerEnterAction();
             OnConversationUpdated.Invoke();
         }
 
         public void Quit()
         {
+            TriggerExitAction();
+            _currentConversant = null;
             _currentDialogue = null;
             _currentNode = null;
             _isChoosing = false;
@@ -58,6 +63,7 @@ namespace RPG.Dialogue
         public void SelectChoice(DialogueNode chosenNode)
         {
             _currentNode = chosenNode;
+            TriggerEnterAction();
             _isChoosing = false;
             Next();
         }
@@ -69,19 +75,48 @@ namespace RPG.Dialogue
             if (numberOfPlayerResponses > 0)
             {
                 _isChoosing = true;
+                TriggerExitAction();
                 OnConversationUpdated.Invoke();
                 return;
             }
             
             _isChoosing = false;
             var childNodes = _currentDialogue.GetAIChildren(_currentNode).ToArray();
+            TriggerExitAction();
             _currentNode = childNodes[Random.Range(0, childNodes.Length)];
+            TriggerEnterAction();
             OnConversationUpdated.Invoke();
         }
 
         public bool HasNext()
         {
             return _currentNode.GetChildren().Count > 0;
+        }
+
+        private void TriggerEnterAction()
+        {
+            if (_currentNode != null)
+            {
+                TriggerAction(_currentNode.GetEnterAction());
+            }
+        }
+        
+        private void TriggerExitAction()
+        {
+            if (_currentNode != null)
+            {
+                TriggerAction(_currentNode.GetExitAction());
+            }
+        }
+
+        private void TriggerAction(string action)
+        {
+            if (action == string.Empty)
+            {
+                return;
+            }
+            
+            _currentConversant.TriggerAction(action);
         }
     }
 }

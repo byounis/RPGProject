@@ -22,6 +22,8 @@ MonoBehaviour:
     y: 413
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &-6448437721520143565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,6 +46,8 @@ MonoBehaviour:
     y: 407
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &-3860080663031775394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +70,8 @@ MonoBehaviour:
     y: 128
     width: 200
     height: 100
+  _onEnterAction: TestSelectionEntry
+  _onExitAction: 
 --- !u!114 &-3528519494835160614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,6 +94,8 @@ MonoBehaviour:
     y: 269
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &-1994408382656155823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +118,8 @@ MonoBehaviour:
     y: 78
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &-1896034182145100867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,10 +138,12 @@ MonoBehaviour:
   - a2e68063-377d-4027-b9b7-621e302d8bcd
   _rect:
     serializedVersion: 2
-    x: 743
-    y: 535
+    x: 757
+    y: 299
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &-1360615408089554947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,10 +161,12 @@ MonoBehaviour:
   _children: []
   _rect:
     serializedVersion: 2
-    x: 1691
+    x: 1690
     y: 123
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: Attack
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,10 +211,12 @@ MonoBehaviour:
   - 70891e87-3f80-491a-9442-976ad62c29dc
   _rect:
     serializedVersion: 2
-    x: 19
-    y: 274
+    x: 6
+    y: 282
     width: 200
     height: 100
+  _onEnterAction: TestEntryAction
+  _onExitAction: 
 --- !u!114 &1588904754516083081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +240,8 @@ MonoBehaviour:
     y: 406
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &4760255723972010844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +265,8 @@ MonoBehaviour:
     y: 200
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: TestAIExitAction
 --- !u!114 &5584070018637514444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,3 +288,5 @@ MonoBehaviour:
     y: 420
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 

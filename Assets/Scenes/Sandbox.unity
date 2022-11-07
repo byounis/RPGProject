@@ -780,7 +780,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377966400}
-  m_LocalRotation: {x: 0.09908098, y: -0.83330804, z: 0.1587238, w: 0.52018017}
+  m_LocalRotation: {x: 0.09908097, y: -0.83330804, z: 0.1587238, w: 0.5201802}
   m_LocalPosition: {x: 2.33, y: 21.07, z: 9.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3165,7 +3165,7 @@ PrefabInstance:
     - target: {fileID: 1138646060529787163, guid: c76de717b7b8e884ea511147eb4a14ac,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -570.74994
+      value: -570.75006
       objectReference: {fileID: 0}
     - target: {fileID: 1139218830378202041, guid: c76de717b7b8e884ea511147eb4a14ac,
         type: 3}
@@ -6338,7 +6338,7 @@ PrefabInstance:
     - target: {fileID: 3098105762663311164, guid: 3bd1edea9a6039c419b821df96032974,
         type: 3}
       propertyPath: _chaseDistance
-      value: 0.1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3876737175656616600, guid: 3bd1edea9a6039c419b821df96032974,
         type: 3}
@@ -8174,6 +8174,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogue: {fileID: 11400000, guid: 0b119b80d0dc9ec4dbb18dd7e5b8e4cc, type: 2}
+--- !u!114 &1064473243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5672843462955462080, guid: 3bd1edea9a6039c419b821df96032974,
+    type: 3}
+  m_PrefabInstance: {fileID: 866211618}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064473232}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 526945137161f5541969ec57b75f8a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1064473246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064473232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec463b642da94bff9cad1c994b4d28d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _action: Attack
+  _onTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1064473243}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &1065987632
 GameObject:
   m_ObjectHideFlags: 0

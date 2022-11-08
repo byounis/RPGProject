@@ -9,16 +9,18 @@ namespace RPG.UI
     {
         [SerializeField] private TextMeshProUGUI _title;
         [SerializeField] private Transform _objectiveContainer;
-        [SerializeField] private GameObject _objectivePrefab;
+        [SerializeField] private GameObject _objectiveIncompletePrefab;
+        [SerializeField] private GameObject _objectiveCompletedPrefab;
         
-        public void Setup(Quest quest)
+        public void Setup(QuestStatus questStatus)
         {
-            _title.SetText(quest.GetTitle());
+            _title.SetText(questStatus.GetQuest().GetTitle());
             _objectiveContainer.DestroyChildren();
             
-            foreach (var objective in quest.GetObjectives())
+            foreach (var objective in questStatus.GetQuest().GetObjectives())
             {
-                var objectiveGameObject = Instantiate(_objectivePrefab, _objectiveContainer);
+                var prefab = questStatus.IsObjectiveComplete(objective) ? _objectiveCompletedPrefab : _objectiveIncompletePrefab;
+                var objectiveGameObject = Instantiate(prefab, _objectiveContainer);
                 var text = objectiveGameObject.GetComponentInChildren<TextMeshProUGUI>();
                 text.SetText(objective);
             }

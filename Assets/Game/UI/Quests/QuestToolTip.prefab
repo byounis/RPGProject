@@ -541,7 +541,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _title: {fileID: 7524205927024342968}
   _objectiveContainer: {fileID: 8004138125739964120}
-  _objectivePrefab: {fileID: 8512531315781602336, guid: 82e2c04642d09e44097356ebc32f1e80,
+  _objectiveIncompletePrefab: {fileID: 4538614630597621758, guid: 7fa37e641b3959846b3f383d279396c7,
+    type: 3}
+  _objectiveCompletedPrefab: {fileID: 8512531315781602336, guid: 82e2c04642d09e44097356ebc32f1e80,
     type: 3}
 --- !u!1 &5325145955511493595
 GameObject:

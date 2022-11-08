@@ -323,6 +323,26 @@ MonoBehaviour:
     HotSpot: {x: 0, y: 0}
   _maxDistanceNavMeshProjection: 1
   _sphereCastRadius: 0.25
+--- !u!114 &-552041104943794314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113844263378858872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cfb984b503e41b8a3a5aa8ea73c53a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statuses:
+  - _quest: {fileID: 11400000, guid: 67e9062a965fa7c438d458cd1c73aff9, type: 2}
+    _completedObjectives:
+    - a
+    - b
+  - _quest: {fileID: 11400000, guid: 03eeb50e71580d3449ab0f653730f330, type: 2}
+    _completedObjectives:
+    - 2
 --- !u!114 &1161197750353630159
 MonoBehaviour:
   m_ObjectHideFlags: 0

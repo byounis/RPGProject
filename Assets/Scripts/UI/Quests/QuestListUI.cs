@@ -7,17 +7,19 @@ namespace RPG.UI
 {
     public class QuestListUI : MonoBehaviour
     {
-        [SerializeField] private Quest[] tempQuests;
         [SerializeField] private QuestItemUI _questItemPrefab;
+        
+        private QuestList _questList;
 
         private void Start()
         {
             transform.DestroyChildren();
+            _questList = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
             
-            foreach (var quest in tempQuests)
+            foreach (var questStatus in _questList.GetStatuses())
             {
                 var questItemUI = Instantiate(_questItemPrefab, transform);
-                questItemUI.Setup(quest);
+                questItemUI.Setup(questStatus);
             }
         }
     }

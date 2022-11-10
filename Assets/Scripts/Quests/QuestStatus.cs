@@ -1,14 +1,16 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace RPG.Quests
 {
-    [Serializable]
     public class QuestStatus
     {
-        [SerializeField] private Quest _quest;
-        [SerializeField] private List<string> _completedObjectives;
+        private readonly Quest _quest;
+        private readonly List<string> _completedObjectives = new List<string>();
+
+        public QuestStatus(Quest quest)
+        {
+            _quest = quest;
+        }
 
         public Quest GetQuest()
         {
@@ -23,6 +25,14 @@ namespace RPG.Quests
         public bool IsObjectiveComplete(string objective)
         {
             return _completedObjectives.Contains(objective);
+        }
+
+        public void CompleteObjective(string objective)
+        {
+            if (_quest.HasObjective(objective) && !IsObjectiveComplete(objective))
+            {
+                _completedObjectives.Add(objective);
+            }
         }
     }
 }

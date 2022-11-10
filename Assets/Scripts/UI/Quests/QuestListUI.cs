@@ -13,9 +13,13 @@ namespace RPG.UI
 
         private void Start()
         {
-            transform.DestroyChildren();
             _questList = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
-            
+            _questList.OnUpdatedQuestList += UpdateUI;
+        }
+
+        private void UpdateUI()
+        {
+            transform.DestroyChildren();
             foreach (var questStatus in _questList.GetStatuses())
             {
                 var questItemUI = Instantiate(_questItemPrefab, transform);

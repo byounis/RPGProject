@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-1577536067913155297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a806500ac9a4c0b95cc7b1c231b0cd5, type: 3}
+  m_Name: bb15c317-2f00-4e5d-b065-ce09a97105da
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: No idea what you need it for, but this will probably work.
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 769
+    y: 121
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: CompleteObjective
+--- !u!114 &-1094306814629691126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a806500ac9a4c0b95cc7b1c231b0cd5, type: 3}
+  m_Name: 3aa5efa2-204f-45e5-92e6-e96f97ee03e7
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: I'm not sure yet
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 514
+    y: 242
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9715dae2fe574e208557dce86554510f, type: 3}
+  m_Name: Sketchy Pharmacist
+  m_EditorClassIdentifier: 
+  _dialogueNodes:
+  - {fileID: 732463896945432986}
+  - {fileID: 2772290232567422119}
+  - {fileID: 3428332758506675176}
+  - {fileID: -1577536067913155297}
+  - {fileID: -1094306814629691126}
+  _newNodeOffset: {x: 250, y: 0}
+--- !u!114 &732463896945432986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a806500ac9a4c0b95cc7b1c231b0cd5, type: 3}
+  m_Name: 9d12b12b-cb05-4406-a5f6-c2cc605445d4
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: 'Hi ... i''m the villagers "pharmacist" hehe. '
+  _children:
+  - 4b09f789-dc57-43d4-848a-4182bf0cba20
+  _rect:
+    serializedVersion: 2
+    x: 36
+    y: 123
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+--- !u!114 &2772290232567422119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a806500ac9a4c0b95cc7b1c231b0cd5, type: 3}
+  m_Name: 4b09f789-dc57-43d4-848a-4182bf0cba20
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Can i help you with something?
+  _children:
+  - 8d25d55e-c832-452b-8dc0-9ccf56abbd58
+  - 3aa5efa2-204f-45e5-92e6-e96f97ee03e7
+  _rect:
+    serializedVersion: 2
+    x: 282
+    y: 121
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+--- !u!114 &3428332758506675176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a806500ac9a4c0b95cc7b1c231b0cd5, type: 3}
+  m_Name: 8d25d55e-c832-452b-8dc0-9ccf56abbd58
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: I need some foot cream
+  _children:
+  - bb15c317-2f00-4e5d-b065-ce09a97105da
+  _rect:
+    serializedVersion: 2
+    x: 519
+    y: 121
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 

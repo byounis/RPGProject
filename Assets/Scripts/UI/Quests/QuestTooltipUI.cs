@@ -19,10 +19,10 @@ namespace RPG.UI
             
             foreach (var objective in questStatus.GetQuest().GetObjectives())
             {
-                var prefab = questStatus.IsObjectiveComplete(objective) ? _objectiveCompletedPrefab : _objectiveIncompletePrefab;
+                var prefab = questStatus.IsObjectiveComplete(objective.Reference) ? _objectiveCompletedPrefab : _objectiveIncompletePrefab;
                 var objectiveGameObject = Instantiate(prefab, _objectiveContainer);
                 var text = objectiveGameObject.GetComponentInChildren<TextMeshProUGUI>();
-                text.SetText(objective);
+                text.SetText(objective.Description);
             }
         }
     }

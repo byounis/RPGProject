@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: Mother hubbards bunions
   m_EditorClassIdentifier: 
   _objectives:
-  - Get the foot cream
-  - 3
+  - Reference: 2
+    Description: Get the foot cream
+  - Reference: 3
+    Description: Deliver the cream
+  _rewards:
+  - Quantity: 1
+    Item: {fileID: 11400000, guid: bd4875750b3db0d48a1ecf81191b4697, type: 2}

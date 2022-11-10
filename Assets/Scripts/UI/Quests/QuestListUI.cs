@@ -15,6 +15,7 @@ namespace RPG.UI
         {
             _questList = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
             _questList.OnUpdatedQuestList += UpdateUI;
+            UpdateUI();
         }
 
         private void UpdateUI()

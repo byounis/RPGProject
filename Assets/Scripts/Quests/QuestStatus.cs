@@ -1,15 +1,41 @@
+using System;
 using System.Collections.Generic;
 
 namespace RPG.Quests
 {
     public class QuestStatus
     {
+        [Serializable]
+        private class Record
+        {
+            public string QuestName;
+            public List<string> CompletedObjectives;
+
+            public Record(Quest quest, List<string> completedObjectives)
+            {
+                QuestName = quest.name;
+                CompletedObjectives = completedObjectives;
+            }
+        }
+        
         private readonly Quest _quest;
         private readonly List<string> _completedObjectives = new List<string>();
 
         public QuestStatus(Quest quest)
         {
             _quest = quest;
+        }
+        
+        public QuestStatus(object objectState)
+        {
+            var record = objectState as Record;
+            if (record == null)
+            {
+                return;
+            }
+
+            _quest = Quest.GetByName(record.QuestName);
+            _completedObjectives = record.CompletedObjectives;
         }
 
         public Quest GetQuest()
@@ -33,6 +59,11 @@ namespace RPG.Quests
             {
                 _completedObjectives.Add(objective);
             }
+        }
+
+        public object CaptureState()
+        {
+            return new Record(_quest, _completedObjectives);
         }
     }
 }

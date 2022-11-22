@@ -44,8 +44,8 @@ MonoBehaviour:
   - f968c723-ee40-4695-b1c1-8673a4e97c91
   _rect:
     serializedVersion: 2
-    x: 284
-    y: 611
+    x: 283
+    y: 610
     width: 200
     height: 100
   _onEnterAction: 
@@ -54,6 +54,32 @@ MonoBehaviour:
     _predicate: HasQuest
     _parameters:
     - Mother hubbards bunions
+--- !u!114 &-3181765400373751166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a806500ac9a4c0b95cc7b1c231b0cd5, type: 3}
+  m_Name: 66294ae0-f96a-4466-91ed-2e2121ec352c
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: That's amazing, thank you!
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 558
+    y: 286
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _condition:
+    _predicate: 
+    _parameters: []
 --- !u!114 &-2026566875636299911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +124,7 @@ MonoBehaviour:
   - d4fa33af-a275-4b24-aa5c-c887d6c1889a
   - f8c16087-fd3d-417e-9e84-295e78933fcf
   - cebe3a4a-409a-4c46-81e1-871e7852b727
+  - bb08187a-0e14-43bd-abef-e2a7c59d7c87
   _rect:
     serializedVersion: 2
     x: 47
@@ -128,6 +155,8 @@ MonoBehaviour:
   - {fileID: -2026566875636299911}
   - {fileID: -3884368406070299282}
   - {fileID: 3704492844704966297}
+  - {fileID: 8258480120240644385}
+  - {fileID: -3181765400373751166}
   _newNodeOffset: {x: 250, y: 0}
 --- !u!114 &2821279873153800809
 MonoBehaviour:
@@ -182,3 +211,31 @@ MonoBehaviour:
   _condition:
     _predicate: 
     _parameters: []
+--- !u!114 &8258480120240644385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a806500ac9a4c0b95cc7b1c231b0cd5, type: 3}
+  m_Name: bb08187a-0e14-43bd-abef-e2a7c59d7c87
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: I have the foot cream!
+  _children:
+  - 66294ae0-f96a-4466-91ed-2e2121ec352c
+  _rect:
+    serializedVersion: 2
+    x: 308
+    y: 285
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _condition:
+    _predicate: HasInventoryItem
+    _parameters:
+    - b781086a-a830-498f-8a46-1dda3d89cf71

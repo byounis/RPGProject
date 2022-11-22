@@ -10,9 +10,9 @@ namespace RPG.Quests
     public class Quest : ScriptableObject
     {
         [Serializable]
-        private class Reward
+        public class Reward
         {
-            public int Quantity;
+            [Min(1)] public int Quantity;
             public InventoryItem Item;
         }
         
@@ -39,6 +39,11 @@ namespace RPG.Quests
         public IEnumerable<Objective> GetObjectives()
         {
             return _objectives;
+        }
+
+        public IEnumerable<Reward> GetRewards()
+        {
+            return _rewards;
         }
 
         public bool HasObjective(string objectiveReference)

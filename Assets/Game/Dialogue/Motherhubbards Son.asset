@@ -23,6 +23,37 @@ MonoBehaviour:
     height: 100
   _onEnterAction: 
   _onExitAction: 
+  _condition:
+    _predicate: 
+    _parameters: []
+--- !u!114 &-3884368406070299282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a806500ac9a4c0b95cc7b1c231b0cd5, type: 3}
+  m_Name: cebe3a4a-409a-4c46-81e1-871e7852b727
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: I'm already on the case.
+  _children:
+  - f968c723-ee40-4695-b1c1-8673a4e97c91
+  _rect:
+    serializedVersion: 2
+    x: 284
+    y: 611
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _condition:
+    _predicate: HasQuest
+    _parameters:
+    - Mother hubbards bunions
 --- !u!114 &-2026566875636299911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,6 +77,9 @@ MonoBehaviour:
     height: 100
   _onEnterAction: 
   _onExitAction: GiveQuest
+  _condition:
+    _predicate: 
+    _parameters: []
 --- !u!114 &-535347964152387027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +97,7 @@ MonoBehaviour:
   _children:
   - d4fa33af-a275-4b24-aa5c-c887d6c1889a
   - f8c16087-fd3d-417e-9e84-295e78933fcf
+  - cebe3a4a-409a-4c46-81e1-871e7852b727
   _rect:
     serializedVersion: 2
     x: 47
@@ -71,6 +106,9 @@ MonoBehaviour:
     height: 100
   _onEnterAction: 
   _onExitAction: 
+  _condition:
+    _predicate: 
+    _parameters: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,6 +126,8 @@ MonoBehaviour:
   - {fileID: -8831038417347260463}
   - {fileID: 2821279873153800809}
   - {fileID: -2026566875636299911}
+  - {fileID: -3884368406070299282}
+  - {fileID: 3704492844704966297}
   _newNodeOffset: {x: 250, y: 0}
 --- !u!114 &2821279873153800809
 MonoBehaviour:
@@ -113,3 +153,32 @@ MonoBehaviour:
     height: 100
   _onEnterAction: 
   _onExitAction: 
+  _condition:
+    _predicate: 
+    _parameters: []
+--- !u!114 &3704492844704966297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a806500ac9a4c0b95cc7b1c231b0cd5, type: 3}
+  m_Name: f968c723-ee40-4695-b1c1-8673a4e97c91
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Oops, i thought you were someone else.
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 534
+    y: 611
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _condition:
+    _predicate: 
+    _parameters: []

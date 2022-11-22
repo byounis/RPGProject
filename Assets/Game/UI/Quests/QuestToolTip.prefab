@@ -545,6 +545,7 @@ MonoBehaviour:
     type: 3}
   _objectiveCompletedPrefab: {fileID: 8512531315781602336, guid: 82e2c04642d09e44097356ebc32f1e80,
     type: 3}
+  _rewardText: {fileID: 7084758420592987195}
 --- !u!1 &5325145955511493595
 GameObject:
   m_ObjectHideFlags: 0

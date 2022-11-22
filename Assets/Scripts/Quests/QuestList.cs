@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using GameDevTV.Inventories;
 using GameDevTV.Saving;
+using RPG.Core;
 using UnityEngine;
 
 namespace RPG.Quests
 {
-    public class QuestList : MonoBehaviour, ISaveable
+    public class QuestList : MonoBehaviour, ISaveable, IPredicateEvaluator
     {
         private readonly List<QuestStatus> _statuses = new List<QuestStatus>();
 
@@ -28,9 +30,20 @@ namespace RPG.Quests
         {
             var status = GetQuestStatus(quest);
             status.CompleteObjective(objective);
+
+            if (status.IsComplete())
+            {
+                GiveReward(quest);
+            }
+            
             OnUpdatedQuestList?.Invoke();
         }
-
+        
+        public IEnumerable<QuestStatus> GetStatuses()
+        {
+            return _statuses;
+        }
+        
         private QuestStatus GetQuestStatus(Quest quest)
         {
             foreach (var status in _statuses)
@@ -43,10 +56,27 @@ namespace RPG.Quests
 
             return null;
         }
-        
-        public IEnumerable<QuestStatus> GetStatuses()
+        private void GiveReward(Quest quest)
         {
-            return _statuses;
+            var inventory = GetComponent<Inventory>();
+            foreach (var reward in quest.GetRewards())
+            {
+                var addedToInventory = inventory.AddToFirstEmptySlot(reward.Item, reward.Quantity);
+                if (!addedToInventory)
+                {
+                    GetComponent<ItemDropper>().DropItem(reward.Item, reward.Quantity);
+                }
+            }
+        }
+        
+        public bool? Evaluate(string predicate, string[] parameters)
+        {
+            if (predicate != "HasQuest")
+            {
+                return null;
+            }
+
+            return HasQuest(Quest.GetByName(parameters[0]));
         }
 
         public object CaptureState()
@@ -76,5 +106,6 @@ namespace RPG.Quests
             
             OnUpdatedQuestList?.Invoke();
         }
+
     }
 }

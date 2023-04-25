@@ -1,4 +1,7 @@
 # RPGProject
+
+This is a work in progress. 
+
 Let's build an RPG using what i learned from GameDev.tv Core RPG 
 - Combat
 - AI
